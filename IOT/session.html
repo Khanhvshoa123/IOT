@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard - IoT Device Management</title>
+  <style>
+   body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: aqua;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+
+    nav {
+      background-color: rgb(116 84 49 / 12%);
+      color: #fff;
+      padding: 10px;
+    }
+
+    nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li {
+      display: inline;
+      margin-right: 20px;
+    }
+
+    .container {
+      margin: 20px;
+    }
+
+    h1 {
+      color: black;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    tr:hover {
+      background-color: #f5f5f5;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>IoT Device Management</h1>
+  </header>
+
+  <nav>
+    <ul>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="devices.html">Devices</a></li>
+        <li><a href="user.html">Users</a></li>
+        <li><a href="settings.html">Settings</a></li>
+        <li><a href="feedback.html">Customer Feedback</a></li>
+        <li><a href="session.html">Session</a></li>
+      </ul>
+  </nav>
+
+  <div class="container">
+    <h1>Session Management</h1>
+
+    <!-- User Session Info -->
+    <div class="session-info">
+      <p><strong>User:</strong> <span id="sessionUsername"></span></p>
+      <p><strong>Session Status:</strong> <span id="sessionStatus"></span></p>
+      <p><strong>Session Duration:</strong> <span id="sessionDuration"></span></p>
+    </div>
+
+    <!-- Buttons -->
+    <div>
+      <button class="btn" onclick="startSession('john')">Start Session (John)</button>
+      <button class="btn" onclick="startSession('jane')">Start Session (Jane)</button>
+      <button class="btn" onclick="endSession()">End Session</button>
+    </div>
+
+    <!-- Session Statistics -->
+    <h2>Session Statistics</h2>
+    <table>
+      <tr>
+        <th>User</th>
+        <th>Total Sessions</th>
+        <th>Total Duration</th>
+      </tr>
+      <tr>
+        <td>John</td>
+        <td><span id="johnTotalSessions">0</span></td>
+        <td><span id="johnTotalDuration">0</span></td>
+      </tr>
+      <tr>
+        <td>Jane</td>
+        <td><span id="janeTotalSessions">0</span></td>
+        <td><span id="janeTotalDuration">0</span></td>
+      </tr>
+    </table>
+
+    <!-- User Session History -->
+    <h2>Session History</h2>
+    <table id="sessionHistoryTable">
+      <tr>
+        <th>User</th>
+        <th>Login Time</th>
+        <th>Logout Time</th>
+      </tr>
+    </table>
+  </div>
+
+  <script>
+    // Dummy user session data
+    const users = {
+      john: {
+        active: false,
+        sessions: [],
+        totalSessions: 0,
+        totalDuration: 0
+      },
+      jane: {
+        active: false,
+        sessions: [],
+        totalSessions: 0,
+        totalDuration: 0
+      }
+    };
+
+    // Function to update the session info on the page
+    function updateSessionInfo() {
+      const sessionUsername = document.getElementById('sessionUsername');
+      const sessionStatus = document.getElementById('sessionStatus');
+      const sessionDuration = document.getElementById('sessionDuration');
+      
+      const activeUser = Object.keys(users).find(username => users[username].active);
+      if (activeUser) {
+        sessionUsername.textContent = activeUser;
+        sessionStatus.textContent = 'Active';
+        const currentTime = new Date();
+        const duration = (currentTime - users[activeUser].sessions[users[activeUser].sessions.length - 1].startTime) / 1000; // in seconds
+        sessionDuration.textContent = `${duration.toFixed(2)} seconds`;
+      } else {
+        sessionUsername.textContent = 'None';
+        sessionStatus.textContent = 'Inactive';
+        sessionDuration.textContent = 'N/A';
+      }
+    }
+
+    // Function to start a user session
+    function startSession(username) {
+      if (!users[username].active) {
+        users[username].active = true;
+        const currentTime = new Date();
+        users[username].sessions.push({ startTime: currentTime });
+        updateSessionInfo();
+      }
+    }
+
+    // Function to end the current user session
+    function endSession() {
+      const activeUser = Object.keys(users).find(username => users[username].active);
+      if (activeUser) {
+        users[activeUser].active = false;
+        const currentTime = new Date();
+        const session = users[activeUser].sessions[users[activeUser].sessions.length - 1];
+        session.endTime = currentTime;
+        const duration = (currentTime - session.startTime) / 1000; // in seconds
+        users[activeUser].totalSessions++;
+        users[activeUser].totalDuration += duration;
+        updateSessionInfo();
+        updateSessionStatistics();
+        updateSessionHistory();
+      }
+    }
+
+    // Function to update session statistics on the page
+    function updateSessionStatistics() {
+      const johnTotalSessions = document.getElementById('johnTotalSessions');
+      const johnTotalDuration = document.getElementById('johnTotalDuration');
+      const janeTotalSessions = document.getElementById('janeTotalSessions');
+      const janeTotalDuration = document.getElementById('janeTotalDuration');
+      
+      johnTotalSessions.textContent = users.john.totalSessions;
+      johnTotalDuration.textContent = `${users.john.totalDuration.toFixed(2)} seconds`;
+      janeTotalSessions.textContent = users.jane.totalSessions;
+      janeTotalDuration.textContent = `${users.jane.totalDuration.toFixed(2)} seconds`;
+    }
+
+    // Function to update session history on the page
+    function updateSessionHistory() {
+      const sessionHistoryTable = document.getElementById('sessionHistoryTable');
+      const activeUser = Object.keys(users).find(username => users[username].active);
+
+      if (activeUser) {
+        const session = users[activeUser].sessions[users[activeUser].sessions.length - 1];
+        const row = sessionHistoryTable.insertRow(-1);
+        row.insertCell(0).textContent = activeUser;
+        row.insertCell(1).textContent = session.startTime.toLocaleString();
+        row.insertCell(2).textContent = session.endTime ? session.endTime.toLocaleString() : 'N/A';
+      }
+    }
+
+    // Initialize session info, statistics, and history on page load
+    window.onload = function() {
+      updateSessionInfo();
+      updateSessionStatistics();
+      updateSessionHistory();
+    };
+  </script>
+</body>
+</html>

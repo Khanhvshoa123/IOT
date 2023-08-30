@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard - IoT Device Management</title>
+  <style>
+    /* CSS styles for the Settings section */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color:white;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+
+    nav {
+      background-color: aqua;
+      color: #fff;
+      padding: 10px;
+    }
+
+    nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li {
+      display: inline;
+      margin-right: 20px;
+    }
+    .nav-right {
+    text-align: right;
+    margin-left: auto;
+}
+
+    .container {
+      margin: 20px;
+    }
+
+    h1 {
+      color: #555;
+    }
+
+    .settings-item {
+      background-color: #fff;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      margin: 10px;
+      border-radius: 4px;
+    }
+
+    .settings-item h2 {
+      color: #333;
+    }
+
+    .settings-item p {
+      color: #888;
+    }
+
+    .settings-item input[type="text"],
+    .settings-item input[type="password"],
+    .settings-item select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+
+    .settings-item button {
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .settings-item button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>IoT Device Management</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="devices.html">Devices</a></li>
+        <li><a href="user.html">Users</a></li>
+        <li><a href="settings.html">Settings</a></li>
+        <li><a href="feedback.html">Customer Feedback</a></li>
+        <li><a href="session.html">Session</a></li>
+        <div class="nav-right">
+          <button id="logout-button">Đăng xuất</button>
+      </div>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h1>Settings</h1>
+
+    <div class="settings-item">
+      <h2>General Settings</h2>
+      <label for="timezone">Timezone:</label>
+      <select id="timezone" name="timezone">
+        <option value="UTC">UTC</option>
+        <option value="GMT">GMT</option>
+        <option value="EST">EST</option>
+        <!-- Add more timezone options here -->
+      </select><br>
+
+      <label for="language">Language:</label>
+      <select id="language" name="language">
+        <option value="en">English</option>
+        <option value="fr">French</option>
+        <option value="es">Spanish</option>
+        <!-- Add more language options here -->
+      </select><br>
+
+      <button onclick="saveGeneralSettings()">Save</button>
+    </div>
+
+    <div class="settings-item">
+      <h2>Account Settings</h2>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required><br>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required><br>
+
+      <button onclick="saveAccountSettings()">Save</button>
+    </div>
+  </div>
+
+  <script>
+    // JavaScript functions for saving settings
+    function saveGeneralSettings() {
+      // Implement the logic for saving general settings here
+      alert("General settings saved successfully!");
+    }
+
+    function saveAccountSettings() {
+      // Implement the logic for saving account settings here
+      alert("Account settings saved successfully!");
+    }
+    document.addEventListener("DOMContentLoaded", function () {
+    // ... Đoạn mã hiện tại ...
+
+    // Xử lý sự kiện nút đăng xuất
+    const logoutButton = document.getElementById("logout-button");
+    logoutButton.addEventListener("click", function () {
+        // Thực hiện hành động đăng xuất ở đây (ví dụ: xóa dữ liệu phiên đăng nhập)
+
+        // Chuyển hướng đến trang đăng nhập
+        window.location.href = "path-to-login-page.html";
+    });
+});
+document.addEventListener("DOMContentLoaded", function () {
+    // ... Đoạn mã hiện tại ...
+
+    // Xử lý sự kiện nút đăng xuất
+    const logoutButton = document.getElementById("logout-button");
+    logoutButton.addEventListener("click", function () {
+        // Thực hiện hành động đăng xuất ở đây (ví dụ: xóa dữ liệu phiên đăng nhập)
+
+        // Chuyển hướng đến trang đăng nhập
+        window.location.href = "login.html";
+    });
+});
+
+  </script>
+</body>
+</html>

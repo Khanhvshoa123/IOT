@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard - IoT Device Management</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: aqua;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+
+    nav {
+      background-color: rgb(116 84 49 / 12%);
+      color: #fff;
+      padding: 10px;
+    }
+
+    nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li {
+      display: inline;
+      margin-right: 20px;
+    }
+
+    .container {
+      margin: 20px;
+    }
+
+    h1 {
+      color: black;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    tr:hover {
+      background-color: #f5f5f5;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>IoT Device Management</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="devices.html">Devices</a></li>
+      <li><a href="user.html">Users</a></li>
+      <li><a href="settings.html">Settings</a></li>
+      <li><a href="feedback.html">Customer Feedback</a></li>
+      <li><a href="session.html">Session</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h1>Device List</h1>
+    <table>
+      <tr>
+        <th>Device ID</th>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Device 1</td>
+        <td>Online</td>
+        <td>
+          <button>Edit</button>
+          <button>Delete</button>
+        </td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Device 2</td>
+        <td>Offline</td>
+        <td>
+          <button>Edit</button>
+          <button>Delete</button>
+        </td>
+      </tr>
+      <!-- Add more device rows here -->
+    </table>
+  </div>
+</body>
+</html>

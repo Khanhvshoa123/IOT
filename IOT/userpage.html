@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Giao diện Người dùng</title>
+    <link rel="stylesheet" type="text/css" href="userpage.css">
+</head>
+<body>
+    <h1>Giao diện Người dùng</h1>
+
+    <div class="scan-container">
+        <button id="scanButton">Quét để kích hoạt sản phẩm</button>
+    </div>
+
+    <div class="device-management">
+        <h2>Quản lý thiết bị</h2>
+        <ul id="deviceList">
+            <!-- Danh sách thiết bị sẽ được thêm bằng JavaScript -->
+        </ul>
+    </div>
+
+    <div class="device-controls">
+        <h2>Điều khiển thiết bị</h2>
+        <!-- Giao diện điều khiển thiết bị sẽ được thêm bằng JavaScript -->
+    </div>
+
+    <div class="device-status">
+        <h2>Thống kê trạng thái thiết bị</h2>
+        <ul id="statusList">
+            <!-- Thống kê trạng thái sẽ được thêm bằng JavaScript -->
+        </ul>
+    </div>
+
+    <div class="feedback">
+        <h2>Gửi phản hồi</h2>
+        <form id="feedbackForm">
+            <label for="feedbackMessage">Phản hồi:</label>
+            <textarea id="feedbackMessage" name="feedbackMessage" rows="4" required></textarea>
+            <button type="submit">Gửi</button>
+        </form>
+    </div>
+
+    <script src="user_dashboard.js"></script>
+</body>
+</html>

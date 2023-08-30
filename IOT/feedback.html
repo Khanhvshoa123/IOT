@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard - IoT Device Management</title>
+  <style>
+    /* CSS styles for the Customer Feedback section */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color:white;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+
+    nav {
+      background-color: aqua;
+      color: #fff;
+      padding: 10px;
+    }
+
+    nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li {
+      display: inline;
+      margin-right: 20px;
+    }
+
+    .container {
+      margin: 20px;
+    }
+
+    h1 {
+      color: #555;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    tr:hover {
+      background-color: #f5f5f5;
+    }
+
+    /* Styles for the modal (popup) */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto; /* 15% from the top and centered */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%; /* Could be more or less, depending on screen size */
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+
+    .modal-buttons {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .modal-buttons button {
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>IoT Device Management</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="devices.html">Devices</a></li>
+      <li><a href="user.html">Users</a></li>
+      <li><a href="settings.html">Settings</a></li>
+      <li><a href="feedback.html">Customer Feedback</a></li>
+      <li><a href="session.html">Session</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h1>Customer Feedback</h1>
+
+    <table>
+      <tr>
+        <th>Feedback ID</th>
+        <th>Customer Name</th>
+        <th>Email</th>
+        <th>Message</th>
+        <th>Actions</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>John Doe</td>
+        <td>john@example.com</td>
+        <td>This is a feedback message.</td>
+        <td>
+          <button onclick="openViewModal(1)">View</button>
+          <button onclick="openReplyModal(1)">Reply</button>
+          <button onclick="deleteFeedback(1)">Delete</button>
+        </td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Jane Smith</td>
+        <td>jane@example.com</td>
+        <td>Another feedback message.</td>
+        <td>
+          <button onclick="openViewModal(2)">View</button>
+          <button onclick="openReplyModal(2)">Reply</button>
+          <button onclick="deleteFeedback(2)">Delete</button>
+        </td>
+      </tr>
+      <!-- Add more feedback rows here -->
+    </table>
+  </div>
+
+  <!-- The Modal for View -->
+  <div id="viewModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeViewModal()">&times;</span>
+      <h2>Feedback Details</h2>
+      <p><strong>Feedback ID:</strong> <span id="viewFeedbackId"></span></p>
+      <p><strong>Customer Name:</strong> <span id="viewCustomerName"></span></p>
+      <p><strong>Email:</strong> <span id="viewCustomerEmail"></span></p>
+      <p><strong>Message:</strong></p>
+      <p id="viewFeedbackMessage"></p>
+    </div>
+  </div>
+
+  <!-- The Modal for Reply -->
+  <div id="replyModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeReplyModal()">&times;</span>
+      <h2>Reply to Feedback</h2>
+      <textarea id="replyMessage" rows="5" placeholder="Type your reply here..."></textarea>
+      <div class="modal-buttons">
+        <button onclick="sendReply()">Send</button>
+        <button onclick="closeReplyModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // JavaScript functions for handling customer feedback and modals
+    function openViewModal(feedbackId) {
+      const feedbackRow = getFeedbackRow(feedbackId);
+      if (feedbackRow) {
+        const feedbackMessage = feedbackRow.cells[3].innerText;
+        document.getElementById("viewFeedbackId").innerText = feedbackId;
+        document.getElementById("viewCustomerName").innerText = feedbackRow.cells[1].innerText;
+        document.getElementById("viewCustomerEmail").innerText = feedbackRow.cells[2].innerText;
+        document.getElementById("viewFeedbackMessage").innerText = feedbackMessage;
+        document.getElementById("viewModal").style.display = "block";
+      }
+    }
+
+    function closeViewModal() {
+      document.getElementById("viewModal").style.display = "none";
+    }
+
+    function openReplyModal(feedbackId) {
+      document.getElementById("replyModal").style.display = "block";
+      // Store the feedbackId in a hidden field or variable for further processing
+    }
+
+    function closeReplyModal() {
+      document.getElementById("replyModal").style.display = "none";
+    }
+
+    function sendReply() {
+      // Implement the logic to send the reply here
+      const replyMessage = document.getElementById("replyMessage").value;
+      // Use the stored feedbackId to process the reply
+      alert("Reply sent: " + replyMessage);
+      closeReplyModal();
+    }
+
+    function deleteFeedback(feedbackId) {
+      // Implement the logic to delete the feedback here
+      alert("Delete Feedback " + feedbackId);
+    }
+
+    function getFeedbackRow(feedbackId) {
+      const table = document.querySelector("table");
+      const rows = table.getElementsByTagName("tr");
+      for (let i = 1; i < rows.length; i++) { // Start from 1 to skip the header row
+        const cell = rows[i].getElementsByTagName("td")[0];
+        if (cell.innerText == feedbackId) {
+          return rows[i];
+        }
+      }
+      return null;
+    }
+  </script>
+</body>
+</html>
